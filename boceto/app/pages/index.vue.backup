@@ -1,0 +1,85 @@
+<template>
+  <div class="antialiased bg-gray-50 scroll-smooth">
+    <TheNavbar />
+    <HeroSection />
+    <TrustBar />
+    <AboutSection />
+    <SystemSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <TestimonialsSection />
+    <CtaSection />
+    <ContactSection />
+    <TheFooter />
+    <WhatsappButton />
+  </div>
+</template>
+
+<script setup>
+// SEO Meta tags
+useHead({
+  title: 'GIWU - Sistema Constructivo Sustentable Green Intelligent Wall Uruguay | Construcción Ecológica',
+  meta: [
+    {
+      name: 'description',
+      content: 'Construcción de casas llave en mano con tecnología Green Intelligent Wall en Uruguay. 30% más rápido, 30% más económico y 100% sustentable. Desde 1998 innovando en construcción ecológica.'
+    },
+    {
+      name: 'keywords',
+      content: 'construcción sustentable uruguay, green wall, construcción ecológica, casas prefabricadas uruguay, construcción rápida, aislación térmica, cooperativas vivienda uruguay'
+    },
+    {
+      name: 'author',
+      content: 'GIWU - Green Intelligent Wall Uruguay'
+    },
+    // Open Graph
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://giwu.com.uy/' },
+    { property: 'og:title', content: 'GIWU - Sistema Constructivo Sustentable Green Intelligent Wall' },
+    { property: 'og:description', content: 'Tecnología de construcción sustentable. 30% más rápido y económico. Menor huella de carbono del mercado.' },
+    { property: 'og:image', content: 'https://giwu.com.uy/images/og-image.jpg' },
+    // Twitter
+    { property: 'twitter:card', content: 'summary_large_image' },
+    { property: 'twitter:url', content: 'https://giwu.com.uy/' },
+    { property: 'twitter:title', content: 'GIWU - Sistema Constructivo Sustentable' },
+    { property: 'twitter:description', content: 'Construcción ecológica y sustentable en Uruguay desde 1998' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://giwu.com.uy/' },
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+  ],
+  htmlAttrs: {
+    lang: 'es',
+    class: 'scroll-smooth'
+  },
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'GIWU - Green Intelligent Wall Uruguay',
+        description: 'Empresa líder en construcción sustentable con sistema Green Intelligent Wall',
+        url: 'https://giwu.com.uy',
+        logo: 'https://giwu.com.uy/logo.png',
+        foundingDate: '1998',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'UY',
+          addressLocality: 'Montevideo'
+        },
+        sameAs: [
+          'https://www.facebook.com/giwuruguay/'
+        ],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+598-96-029-878',
+          contactType: 'sales',
+          areaServed: 'UY',
+          availableLanguage: 'Spanish'
+        }
+      })
+    }
+  ]
+})
+</script>
