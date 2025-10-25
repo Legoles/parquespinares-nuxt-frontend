@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     const smtpHost = process.env.NUXT_PUBLIC_SMTP_HOST
     const smtpPort = parseInt(process.env.NUXT_PUBLIC_SMTP_PORT || '587', 10)
     const smtpUser = process.env.NUXT_PUBLIC_SMTP_USER
-    const smtpPassword = process.env.NUXT_PUBLIC_SMTP_PASSWORD
+    const smtpPassword = process.env.NUXT_SMTP_PASSWORD
     const smtpFrom = process.env.NUXT_PUBLIC_SMTP_FROM
     const smtpTo = process.env.NUXT_PUBLIC_SMTP_TO
 
@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
       const missingVars = []
       if (!smtpHost) missingVars.push('NUXT_PUBLIC_SMTP_HOST')
       if (!smtpUser) missingVars.push('NUXT_PUBLIC_SMTP_USER')
-      if (!smtpPassword) missingVars.push('NUXT_PUBLIC_SMTP_PASSWORD')
+      if (!smtpPassword) missingVars.push('NUXT_SMTP_PASSWORD')
       if (!smtpFrom) missingVars.push('NUXT_PUBLIC_SMTP_FROM')
       if (!smtpTo) missingVars.push('NUXT_PUBLIC_SMTP_TO')
 
