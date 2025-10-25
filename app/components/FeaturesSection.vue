@@ -9,13 +9,13 @@
         </div>
 
         <!-- Decorative lines -->
-        <div class="inline-flex items-center justify-center mb-4 md:mb-6 gap-2" data-aos="fade-up" data-aos-delay="100">
+        <div class="inline-flex items-center justify-center mb-4 md:mb-6 gap-2" data-aos="fade-up" data-aos-delay="50">
           <div class="h-1 w-12 md:w-16 bg-parque-lime rounded-full"></div>
           <div class="h-1 w-12 md:w-16 bg-parque-lime rounded-full"></div>
         </div>
 
         <!-- Title -->
-        <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-3 md:mb-4 leading-tight" data-aos="fade-up" data-aos-delay="200">
+        <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-3 md:mb-4 leading-tight" data-aos="fade-up" data-aos-delay="100">
           Un lugar para vivir,<br class="hidden sm:block" />
           <span class="text-parque-lime">una inversión segura</span>
         </h2>
@@ -26,8 +26,8 @@
         <div
           v-for="feature in features"
           :key="feature.id"
-          :data-aos="`zoom-in-up`"
-          :data-aos-delay="`${(feature.id - 1) * 100}`"
+          :data-aos="`fade-up`"
+          :data-aos-delay="`${(feature.id - 1) * 50}`"
           class="bg-gradient-to-br from-white to-gray-50 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
         >
           <!-- Icon -->
@@ -45,7 +45,7 @@
 
       <!-- Stats Section -->
       <div class="text-center">
-        <div class="inline-flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center bg-parque-lime/10 rounded-2xl p-6 md:p-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="600">
+        <div class="inline-flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center bg-parque-lime/10 rounded-2xl p-6 md:p-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="200">
           <!-- Stat 1 -->
           <div class="text-center md:text-left w-full md:w-auto">
             <p class="text-2xl md:text-3xl font-bold text-parque-dark">21 casas vendidas</p>

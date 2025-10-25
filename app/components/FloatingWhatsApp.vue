@@ -1,6 +1,6 @@
 <template>
   <a
-    href="https://wa.me/598943900000?text=Hola%20Parque%20Pinares%2C%20quisiera%20informaci%C3%B3n"
+    href="https://wa.me/59894390000?text=Hola%20Parque%20Pinares%2C%20quisiera%20informaci%C3%B3n"
     target="_blank"
     rel="noopener noreferrer"
     class="fixed bottom-8 right-8 z-40 group"

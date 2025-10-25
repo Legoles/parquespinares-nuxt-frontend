@@ -12,14 +12,14 @@
     <div class="container mx-auto px-4 md:px-6 relative z-10">
       <div class="max-w-5xl mx-auto">
         <!-- Form Card with Header -->
-        <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="200">
+        <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="150">
           <!-- Header Section WHITE -->
           <div class="px-4 md:px-8 lg:px-16 py-8 md:py-12 lg:py-16 text-center border-b-2 md:border-b-3 border-parque-lime/40">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5 leading-tight" data-aos="fade-up">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5 leading-tight" data-aos="fade-up" data-aos-delay="0">
               <span class="text-parque-green">¿Listo para vivir </span>
               <span class="text-parque-lime">tu sueño?</span>
             </h2>
-            <p class="text-parque-dark text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            <p class="text-parque-dark text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="50">
               Contactanos hoy y descubrí todas las oportunidades que tenemos para vos
             </p>
           </div>

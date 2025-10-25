@@ -26,24 +26,24 @@
     <div class="relative h-full flex flex-col justify-center items-center text-center px-4 md:px-6">
       <div class="fade-in space-y-4 md:space-y-6 max-w-4xl w-full">
         <!-- Badge -->
-        <span class="inline-block bg-parque-lime text-white px-6 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest shadow-2xl" data-aos="fade-up" data-aos-delay="100">
+        <span class="inline-block bg-parque-lime text-white px-6 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest shadow-2xl" data-aos="fade-up" data-aos-delay="0">
           Últimas Oportunidades
         </span>
 
         <!-- Main Title -->
-        <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight" style="text-shadow: 0 1px 3px rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="200">
+        <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight" style="text-shadow: 0 1px 3px rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="50">
           <span class="text-white block">ÚLTIMOS</span>
           <span class="text-white block">TERRENOS</span>
           <span class="text-lime-400 block">DISPONIBLES</span>
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-base md:text-lg lg:text-xl text-white font-light px-2" style="text-shadow: 0 1px 2px rgba(0,0,0,0.15);" data-aos="fade-up" data-aos-delay="300">
+        <p class="text-base md:text-lg lg:text-xl text-white font-light px-2" style="text-shadow: 0 1px 2px rgba(0,0,0,0.15);" data-aos="fade-up" data-aos-delay="100">
           A dos cuadras de la playa<br class="md:hidden"> en Barrio Privado Sustentable
         </p>
 
         <!-- CTA Button -->
-        <div class="pt-2 md:pt-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="pt-2 md:pt-6" data-aos="fade-up" data-aos-delay="150">
           <a
             href="#contacto"
             class="inline-block bg-white text-parque-green px-8 md:px-10 py-3 md:py-4 rounded-full font-semibold text-base md:text-lg shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 active:scale-95"

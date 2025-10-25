@@ -4,10 +4,10 @@ import 'aos/dist/aos.css'
 export default defineNuxtPlugin(() => {
   if (process.client) {
     AOS.init({
-      duration: 800,        // Duración de animación en ms
-      offset: 100,          // Distancia desde viewport antes de activar
-      once: false,          // Permitir que se animen múltiples veces
-      easing: 'ease-in-out', // Función de animación
+      duration: 500,        // Duración más corta (500ms)
+      offset: 80,           // Se activa más cerca
+      once: true,           // Solo animar una vez
+      easing: 'ease-out',   // Easing más sutil
       delay: 0,             // Delay inicial
       anchorPlacement: 'top-bottom' // Punto de anclaje
     })

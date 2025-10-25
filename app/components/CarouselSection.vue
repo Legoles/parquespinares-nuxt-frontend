@@ -7,13 +7,13 @@
           <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-3 md:mb-4" data-aos="fade-up">
             Galería de <span class="text-parque-lime">Imágenes</span>
           </h2>
-          <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+          <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="50">
             Conocé los espacios y amenidades de Parque Pinares
           </p>
         </div>
 
         <!-- Carousel Container -->
-        <div class="overflow-hidden relative group bg-white rounded-lg shadow-lg" data-aos="zoom-in-up" data-aos-delay="200">
+        <div class="overflow-hidden relative group bg-white rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
           <Swiper
             ref="swiperRef"
             :modules="modules"

@@ -10,7 +10,7 @@
             Un espacio diseñado para compartir momentos únicos con familia y amigos
           </p>
         </div>
-        <div class="hover-lift rounded-2xl overflow-hidden shadow-2xl" data-aos="zoom-in-up" data-aos-delay="200">
+        <div class="hover-lift rounded-2xl overflow-hidden shadow-2xl" data-aos="fade-up" data-aos-delay="50">
           <img src="/assets/2.jpg" alt="Club House" class="w-full">
         </div>
       </div>

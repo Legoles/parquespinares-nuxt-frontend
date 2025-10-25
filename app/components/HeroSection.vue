@@ -17,7 +17,7 @@
     <div class="relative h-full flex flex-col justify-center items-center text-center px-4 md:px-6">
       <div class="max-w-4xl space-y-6 md:space-y-8">
         <!-- Badge -->
-        <div class="inline-flex items-center justify-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="inline-flex items-center justify-center" data-aos="fade-up" data-aos-delay="0">
           <div class="relative inline-block">
             <div class="absolute inset-0 bg-gradient-to-r from-parque-lime to-parque-green rounded-full blur-xl opacity-40"></div>
             <span class="relative inline-block bg-gradient-to-r from-parque-lime to-parque-green text-white px-6 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest shadow-2xl backdrop-blur-sm">
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Main Heading -->
-        <div class="space-y-3 md:space-y-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="space-y-3 md:space-y-4" data-aos="fade-up" data-aos-delay="50">
           <h1 class="text-4xl md:text-7xl lg:text-8xl font-black text-white drop-shadow-2xl tracking-tighter leading-[1.1]">
             ÚLTIMOS<br />
             TERRENOS
@@ -39,13 +39,13 @@
         </div>
 
         <!-- Subtitle -->
-        <p class="text-lg md:text-2xl text-white/95 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg" data-aos="fade-up" data-aos-delay="300">
+        <p class="text-lg md:text-2xl text-white/95 font-light max-w-2xl mx-auto leading-relaxed drop-shadow-lg" data-aos="fade-up" data-aos-delay="100">
           A dos cuadras de la playa en un<br class="hidden md:block" />
           <span class="font-semibold text-parque-lime">Barrio Privado Sustentable</span>
         </p>
 
         <!-- Trust Indicators -->
-        <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 pt-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 pt-4" data-aos="fade-up" data-aos-delay="150">
           <div class="flex items-center justify-center space-x-2">
             <div class="w-2 h-2 bg-parque-lime rounded-full"></div>
             <span class="text-sm md:text-base text-white/90 font-medium">21 casas vendidas</span>
@@ -58,7 +58,7 @@
         </div>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-col md:flex-row gap-4 justify-center pt-8 md:pt-12" data-aos="fade-up" data-aos-delay="500">
+        <div class="flex flex-col md:flex-row gap-4 justify-center pt-8 md:pt-12" data-aos="fade-up" data-aos-delay="200">
           <a
             href="#contacto"
             @click="handleClick"

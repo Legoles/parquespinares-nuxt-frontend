@@ -9,7 +9,7 @@
 
       <!-- Map Interactive -->
       <div class="w-full h-full" :class="{ 'mx-auto': !isFullscreen }">
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col" :class="[isFullscreen ? 'h-screen' : 'h-full', { 'rounded-none': isFullscreen }]" data-aos="zoom-in-up" data-aos-delay="100">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col" :class="[isFullscreen ? 'h-screen' : 'h-full', { 'rounded-none': isFullscreen }]" data-aos="fade-up" data-aos-delay="50">
           <!-- Header con instrucciones -->
           <div v-if="!isFullscreen" class="bg-gray-50 border-b px-4 md:px-8 py-2 md:py-3">
             <p class="text-gray-600 text-xs font-semibold uppercase tracking-wide text-center leading-relaxed">

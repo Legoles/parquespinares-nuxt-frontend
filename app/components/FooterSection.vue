@@ -3,12 +3,12 @@
     <div class="container mx-auto px-4 md:px-6">
       <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
         <!-- Logo -->
-        <a href="#" @click.prevent="scrollToTop" class="cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0" data-aos="fade-up">
+        <a href="#" @click.prevent="scrollToTop" class="cursor-pointer hover:opacity-80 transition-opacity flex-shrink-0">
           <img src="/assets/logo.png" alt="Parque Pinares Logo" class="h-12 md:h-16 lg:h-20 object-contain opacity-70" style="filter: brightness(0) invert(1);">
         </a>
 
         <!-- Copyright & Info -->
-        <div class="text-center md:text-right" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-center md:text-right">
           <p class="text-xs md:text-sm text-gray-400">
             &copy; 2025 Parque Pinares. Todos los derechos reservados.
           </p>
