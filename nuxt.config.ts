@@ -111,7 +111,7 @@ export default defineNuxtConfig({
             "@type": "RealEstateAgent",
             "name": "Barrio Privado Parque Pinares",
             "url": "https://www.barrioprivadoparquepinares.com",
-            "telephone": "+598943900000",
+            "telephone": "+59894390000",
             "email": "info@barrioprivadoparquepinares.com",
             "address": {
               "@type": "PostalAddress",
