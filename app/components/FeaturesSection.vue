@@ -1,40 +1,65 @@
 <template>
-  <section class="py-24 bg-white" id="proyecto">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-16">
-        <div class="flex justify-center mb-6">
-          <img src="/assets/logo.png" alt="Logo Parque Pinares" class="max-w-xs h-auto">
+  <section class="py-12 md:py-24 bg-white" id="proyecto">
+    <div class="container mx-auto px-4 md:px-6">
+      <!-- Header -->
+      <div class="text-center mb-8 md:mb-16">
+        <!-- Logo -->
+        <div class="flex justify-center mb-4 md:mb-6" data-aos="fade-up">
+          <img src="/assets/logo.png" alt="Logo Parque Pinares" class="h-12 md:h-auto md:max-w-xs w-auto">
         </div>
-        <div class="inline-flex items-center justify-center mb-6">
-          <div class="h-1 w-16 bg-parque-lime rounded-full"></div>
-          <div class="h-1 w-16 bg-parque-lime rounded-full"></div>
+
+        <!-- Decorative lines -->
+        <div class="inline-flex items-center justify-center mb-4 md:mb-6 gap-2" data-aos="fade-up" data-aos-delay="100">
+          <div class="h-1 w-12 md:w-16 bg-parque-lime rounded-full"></div>
+          <div class="h-1 w-12 md:w-16 bg-parque-lime rounded-full"></div>
         </div>
-        <h2 class="text-4xl md:text-5xl font-bold text-parque-dark mb-4">
-          Un lugar para vivir,<br>
+
+        <!-- Title -->
+        <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-3 md:mb-4 leading-tight" data-aos="fade-up" data-aos-delay="200">
+          Un lugar para vivir,<br class="hidden sm:block" />
           <span class="text-parque-lime">una inversión segura</span>
         </h2>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <div v-for="feature in features" :key="feature.id" class="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
-          <div class="w-14 h-14 bg-parque-lime/10 rounded-xl flex items-center justify-center mb-4">
-            <Icon :name="feature.icon" class="w-8 h-8 text-parque-lime" />
+      <!-- Features Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-6xl mx-auto mb-12 md:mb-16">
+        <div
+          v-for="feature in features"
+          :key="feature.id"
+          :data-aos="`zoom-in-up`"
+          :data-aos-delay="`${(feature.id - 1) * 100}`"
+          class="bg-gradient-to-br from-white to-gray-50 p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
+        >
+          <!-- Icon -->
+          <div class="w-12 md:w-14 h-12 md:h-14 bg-parque-lime/10 rounded-xl flex items-center justify-center mb-4">
+            <Icon :name="feature.icon" class="w-6 md:w-8 h-6 md:h-8 text-parque-lime" />
           </div>
-          <h3 class="text-lg font-semibold text-parque-dark mb-2">{{ feature.title }}</h3>
-          <p class="text-gray-600 text-sm">{{ feature.description }}</p>
+
+          <!-- Title -->
+          <h3 class="text-base md:text-lg font-semibold text-parque-dark mb-2">{{ feature.title }}</h3>
+
+          <!-- Description -->
+          <p class="text-gray-600 text-xs md:text-sm leading-relaxed">{{ feature.description }}</p>
         </div>
       </div>
 
-      <div class="mt-16 text-center">
-        <div class="inline-flex flex-col md:flex-row gap-4 items-center justify-center bg-parque-lime/10 rounded-2xl p-8 max-w-3xl mx-auto">
-          <div class="text-center md:text-left">
-            <p class="text-3xl font-bold text-parque-dark">21 casas vendidas</p>
-            <p class="text-gray-600">Únete a una comunidad consolidada</p>
+      <!-- Stats Section -->
+      <div class="text-center">
+        <div class="inline-flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center bg-parque-lime/10 rounded-2xl p-6 md:p-8 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="600">
+          <!-- Stat 1 -->
+          <div class="text-center md:text-left w-full md:w-auto">
+            <p class="text-2xl md:text-3xl font-bold text-parque-dark">21 casas vendidas</p>
+            <p class="text-sm md:text-base text-gray-600">Únete a una comunidad consolidada</p>
           </div>
+
+          <!-- Divider -->
           <div class="hidden md:block w-px h-12 bg-parque-lime/30"></div>
-          <div class="text-center md:text-left">
-            <p class="text-3xl font-bold text-parque-lime">100% terminado</p>
-            <p class="text-gray-600">Obra totalmente finalizada</p>
+          <div class="md:hidden w-12 h-px bg-parque-lime/30"></div>
+
+          <!-- Stat 2 -->
+          <div class="text-center md:text-left w-full md:w-auto">
+            <p class="text-2xl md:text-3xl font-bold text-parque-lime">100% terminado</p>
+            <p class="text-sm md:text-base text-gray-600">Obra totalmente finalizada</p>
           </div>
         </div>
       </div>

@@ -1,18 +1,19 @@
 <template>
-  <section class="py-24 bg-gray-50" id="galeria">
-    <div class="container mx-auto px-6">
+  <section class="py-12 md:py-24 bg-gray-50" id="amenities">
+    <div class="container mx-auto px-4 md:px-6">
       <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-bold text-parque-dark mb-4">
+        <!-- Header -->
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-2xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-3 md:mb-4" data-aos="fade-up">
             Galería de <span class="text-parque-lime">Imágenes</span>
           </h2>
-          <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p class="text-gray-600 text-base md:text-lg max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
             Conocé los espacios y amenidades de Parque Pinares
           </p>
         </div>
 
         <!-- Carousel Container -->
-        <div class="overflow-hidden relative group bg-white rounded-lg shadow-lg">
+        <div class="overflow-hidden relative group bg-white rounded-lg shadow-lg" data-aos="zoom-in-up" data-aos-delay="200">
           <Swiper
             ref="swiperRef"
             :modules="modules"
@@ -26,7 +27,7 @@
             :simulate-touch="true"
             :grab-cursor="true"
             :speed="300"
-            class="mySwiper h-96 md:h-[600px]"
+            class="mySwiper h-56 md:h-96 lg:h-[600px]"
             @swiper="onSwiperInit"
             @slide-change="onSlideChange"
             role="region"
@@ -50,8 +51,8 @@
 
                 <!-- Zoom icon - Subtle -->
                 <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div class="bg-white/80 text-parque-dark p-2.5 rounded-full shadow-lg flex items-center justify-center">
-                    <Icon name="mdi:magnify-plus" class="w-5 h-5" aria-hidden="true" />
+                  <div class="bg-white/80 text-parque-dark p-2 md:p-2.5 rounded-full shadow-lg flex items-center justify-center">
+                    <Icon name="mdi:magnify-plus" class="w-4 md:w-5 h-4 md:h-5" aria-hidden="true" />
                   </div>
                 </div>
               </div>
@@ -61,41 +62,41 @@
           <!-- Navigation Buttons - Clean but visible -->
           <button
             @click.prevent="handlePrevSlide"
-            class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-parque-lime group backdrop-blur-sm flex items-center justify-center"
+            class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-2 md:p-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-parque-lime group backdrop-blur-sm flex items-center justify-center"
             type="button"
             title="Imagen anterior (Flecha izquierda)"
             aria-label="Anterior"
           >
-            <Icon name="mdi:chevron-left" class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+            <Icon name="mdi:chevron-left" class="w-5 md:w-6 h-5 md:h-6 group-hover:-translate-x-0.5 transition-transform" />
           </button>
 
           <button
             @click.prevent="handleNextSlide"
-            class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-parque-lime group backdrop-blur-sm flex items-center justify-center"
+            class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/20 hover:bg-white/40 text-white p-2 md:p-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-parque-lime group backdrop-blur-sm flex items-center justify-center"
             type="button"
             title="Imagen siguiente (Flecha derecha)"
             aria-label="Siguiente"
           >
-            <Icon name="mdi:chevron-right" class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            <Icon name="mdi:chevron-right" class="w-5 md:w-6 h-5 md:h-6 group-hover:translate-x-0.5 transition-transform" />
           </button>
 
           <!-- Bottom Controls - Elegant and accessible -->
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent pt-12 pb-4 px-6 z-10">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent pt-8 md:pt-12 pb-3 md:pb-4 px-4 md:px-6 z-10">
             <div class="flex items-center justify-between max-w-6xl mx-auto">
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-3 md:gap-4">
                 <!-- Play/Pause -->
                 <button
                   @click="toggleAutoplay"
-                  class="text-white/80 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime flex items-center justify-center"
+                  class="text-white/80 hover:text-white transition-colors p-1.5 md:p-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime flex items-center justify-center"
                   :title="isAutoplayActive ? 'Pausar (P)' : 'Reanudar (P)'"
                   :aria-label="isAutoplayActive ? 'Pausar carrusel' : 'Reanudar carrusel'"
                 >
-                  <Icon v-if="isAutoplayActive" name="mdi:pause" class="w-5 h-5" aria-hidden="true" />
-                  <Icon v-else name="mdi:play" class="w-5 h-5" aria-hidden="true" />
+                  <Icon v-if="isAutoplayActive" name="mdi:pause" class="w-4 md:w-5 h-4 md:h-5" aria-hidden="true" />
+                  <Icon v-else name="mdi:play" class="w-4 md:w-5 h-4 md:h-5" aria-hidden="true" />
                 </button>
 
                 <!-- Counter -->
-                <div class="text-white/80 text-sm font-medium" aria-live="polite">
+                <div class="text-white/80 text-xs md:text-sm font-medium" aria-live="polite">
                   {{ currentSlide + 1 }} / {{ carouselImages.length }}
                 </div>
               </div>
@@ -103,11 +104,11 @@
               <!-- Fullscreen Button -->
               <button
                 @click="openLightbox(currentSlide)"
-                class="text-white hover:text-parque-lime transition-colors p-2.5 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime flex items-center justify-center"
+                class="text-white hover:text-parque-lime transition-colors p-1.5 md:p-2.5 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime flex items-center justify-center"
                 title="Ampliar (Enter)"
                 aria-label="Ampliar imagen a pantalla completa"
               >
-                <Icon name="mdi:fullscreen" class="w-6 h-6" />
+                <Icon name="mdi:fullscreen" class="w-5 md:w-6 h-5 md:h-6" />
               </button>
             </div>
           </div>
@@ -127,16 +128,18 @@
           aria-modal="true"
           aria-label="Vista ampliada de imagen"
         >
+          <!-- Close Button -->
           <button
             @click.stop="closeLightbox"
-            class="absolute top-6 right-6 text-white/80 hover:text-white transition-colors p-3 z-[10000] flex items-center justify-center gap-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime"
+            class="absolute top-4 md:top-6 right-4 md:right-6 text-white/80 hover:text-white transition-colors p-2 md:p-3 z-[10000] flex items-center justify-center gap-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime"
             title="Cerrar (ESC)"
             aria-label="Cerrar vista ampliada"
           >
-            <span class="text-sm font-medium hidden sm:inline">Cerrar</span>
-            <Icon name="mdi:close" class="w-6 h-6" />
+            <span class="text-xs md:text-sm font-medium hidden sm:inline">Cerrar</span>
+            <Icon name="mdi:close" class="w-5 md:w-6 h-5 md:h-6" />
           </button>
 
+          <!-- Image Container -->
           <div
             class="relative w-full h-full flex items-center justify-center"
             @click.self="closeLightbox"
@@ -150,28 +153,31 @@
               loading="eager"
             >
 
-            <div class="absolute bottom-8 left-8 text-white text-sm opacity-70" aria-live="polite">
+            <!-- Counter -->
+            <div class="absolute bottom-4 md:bottom-8 left-4 md:left-8 text-white text-xs md:text-sm opacity-70" aria-live="polite">
               {{ lightboxIndex + 1 }} / {{ carouselImages.length }}
             </div>
 
+            <!-- Previous Button -->
             <button
               v-if="lightboxIndex > 0"
               @click.stop="lightboxIndex--"
-              class="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime z-[10000] flex items-center justify-center"
+              class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors p-2 md:p-3 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime z-[10000] flex items-center justify-center"
               title="Anterior (Flecha izquierda o desliza)"
               aria-label="Imagen anterior"
             >
-              <Icon name="mdi:chevron-left" class="w-8 h-8" />
+              <Icon name="mdi:chevron-left" class="w-6 md:w-8 h-6 md:h-8" />
             </button>
 
+            <!-- Next Button -->
             <button
               v-if="lightboxIndex < carouselImages.length - 1"
               @click.stop="lightboxIndex++"
-              class="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors p-3 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime z-[10000] flex items-center justify-center"
+              class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white transition-colors p-2 md:p-3 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-parque-lime z-[10000] flex items-center justify-center"
               title="Siguiente (Flecha derecha o desliza)"
               aria-label="Imagen siguiente"
             >
-              <Icon name="mdi:chevron-right" class="w-8 h-8" />
+              <Icon name="mdi:chevron-right" class="w-6 md:w-8 h-6 md:h-8" />
             </button>
           </div>
         </div>

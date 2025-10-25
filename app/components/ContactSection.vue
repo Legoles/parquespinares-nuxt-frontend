@@ -1,5 +1,5 @@
 <template>
-  <section class="py-24 md:py-40 bg-gradient-to-br from-parque-green via-parque-green to-parque-dark relative overflow-hidden" id="contacto">
+  <section class="py-12 md:py-24 lg:py-40 bg-gradient-to-br from-parque-green via-parque-green to-parque-dark relative overflow-hidden" id="contacto">
     <!-- Animated background elements -->
     <div class="absolute inset-0 opacity-10">
       <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
@@ -12,115 +12,121 @@
     <div class="container mx-auto px-4 md:px-6 relative z-10">
       <div class="max-w-5xl mx-auto">
         <!-- Form Card with Header -->
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <div class="bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden" data-aos="zoom-in-up" data-aos-delay="200">
           <!-- Header Section WHITE -->
-          <div class="px-8 md:px-12 lg:px-16 py-14 md:py-16 text-center border-b-3 border-parque-lime/40">
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 leading-tight">
+          <div class="px-4 md:px-8 lg:px-16 py-8 md:py-12 lg:py-16 text-center border-b-2 md:border-b-3 border-parque-lime/40">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5 leading-tight" data-aos="fade-up">
               <span class="text-parque-green">¿Listo para vivir </span>
               <span class="text-parque-lime">tu sueño?</span>
             </h2>
-            <p class="text-parque-dark text-base md:text-lg font-medium leading-relaxed max-w-3xl mx-auto">
+            <p class="text-parque-dark text-sm md:text-base lg:text-lg font-medium leading-relaxed max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
               Contactanos hoy y descubrí todas las oportunidades que tenemos para vos
             </p>
           </div>
 
           <!-- Form Section -->
-          <div class="px-8 md:px-12 lg:px-16 pt-6 md:pt-8 pb-12 md:pb-16">
-            <form @submit.prevent="handleSubmit" class="space-y-8">
+          <div class="px-4 md:px-8 lg:px-16 py-6 md:py-8 lg:py-12">
+            <!-- Error Message -->
+            <div v-if="errorMessage" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p class="text-sm text-red-700">{{ errorMessage }}</p>
+            </div>
+
+            <form @submit.prevent="handleSubmit" @focus="onFormInteraction" @change="onFormInteraction" class="space-y-5 md:space-y-6">
+              <!-- Honeypot field (anti-bot) - Hidden -->
+              <input
+                v-model="form.website"
+                type="text"
+                name="website"
+                style="display: none;"
+                autocomplete="off"
+                tabindex="-1"
+              >
+
               <!-- Name and Phone Row -->
-              <div class="grid md:grid-cols-2 gap-6">
-                <div class="group">
-                  <label for="name" class="block text-sm font-semibold text-gray-900 mb-3 tracking-wide">Nombre completo</label>
+              <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                <div>
+                  <label for="name" class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Nombre</label>
                   <input
                     id="name"
                     v-model="form.name"
                     type="text"
                     name="name"
-                    placeholder="Tu nombre completo"
+                    placeholder="Tu nombre"
                     required
                     aria-required="true"
-                    class="w-full px-6 py-4 bg-gradient-to-b from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-parque-lime focus:border-parque-lime focus:bg-white focus:shadow-lg transition-all duration-300 placeholder:text-gray-400 text-gray-900 font-medium group-hover:border-gray-300"
+                    class="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-parque-lime focus:ring-1 focus:ring-parque-lime transition-all duration-200 placeholder:text-gray-400 text-sm md:text-base text-gray-900"
                   >
                 </div>
-                <div class="group">
-                  <label for="phone" class="block text-sm font-semibold text-gray-900 mb-3 tracking-wide">Teléfono</label>
+                <div>
+                  <label for="phone" class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Teléfono</label>
                   <input
                     id="phone"
                     v-model="form.phone"
                     type="tel"
                     name="phone"
-                    placeholder="Tu número de teléfono"
-                    class="w-full px-6 py-4 bg-gradient-to-b from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-parque-lime focus:border-parque-lime focus:bg-white focus:shadow-lg transition-all duration-300 placeholder:text-gray-400 text-gray-900 font-medium group-hover:border-gray-300"
+                    placeholder="Tu teléfono"
+                    class="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-parque-lime focus:ring-1 focus:ring-parque-lime transition-all duration-200 placeholder:text-gray-400 text-sm md:text-base text-gray-900"
                   >
                 </div>
               </div>
 
               <!-- Email Field -->
-              <div class="group">
-                <label for="email" class="block text-sm font-semibold text-gray-900 mb-3 tracking-wide">Email</label>
+              <div>
+                <label for="email" class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Email</label>
                 <input
                   id="email"
                   v-model="form.email"
                   type="email"
                   name="email"
-                  placeholder="tu.email@ejemplo.com"
+                  placeholder="tu@email.com"
                   required
                   aria-required="true"
-                  class="w-full px-6 py-4 bg-gradient-to-b from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-parque-lime focus:border-parque-lime focus:bg-white focus:shadow-lg transition-all duration-300 placeholder:text-gray-400 text-gray-900 font-medium group-hover:border-gray-300"
+                  class="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-parque-lime focus:ring-1 focus:ring-parque-lime transition-all duration-200 placeholder:text-gray-400 text-sm md:text-base text-gray-900"
                 >
               </div>
 
               <!-- Message Field -->
-              <div class="group">
-                <label for="message" class="block text-sm font-semibold text-gray-900 mb-3 tracking-wide">Mensaje</label>
+              <div>
+                <label for="message" class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5 md:mb-2">Mensaje</label>
                 <textarea
                   id="message"
                   v-model="form.message"
                   name="message"
-                  placeholder="Cuéntanos sobre tu proyecto o consulta..."
+                  placeholder="Cuéntanos tu consulta..."
                   required
-                  rows="6"
+                  rows="4"
                   aria-required="true"
-                  class="w-full px-6 py-4 bg-gradient-to-b from-gray-50 to-gray-100 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-parque-lime focus:border-parque-lime focus:bg-white focus:shadow-lg transition-all duration-300 resize-none placeholder:text-gray-400 text-gray-900 font-medium group-hover:border-gray-300"
+                  class="w-full px-3 md:px-4 py-2 md:py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-parque-lime focus:ring-1 focus:ring-parque-lime transition-all duration-200 resize-none placeholder:text-gray-400 text-sm md:text-base text-gray-900"
                 ></textarea>
               </div>
 
               <!-- Privacy Checkbox -->
-              <div class="bg-gradient-to-r from-parque-lime/5 to-parque-green/5 rounded-xl p-5 border-2 border-parque-lime/20">
-                <div class="flex items-start space-x-4">
-                  <input
-                    v-model="form.privacy"
-                    type="checkbox"
-                    id="privacy"
-                    class="mt-1.5 w-6 h-6 text-parque-lime bg-white border-2 border-parque-green rounded-lg cursor-pointer focus:ring-2 focus:ring-parque-lime transition-all appearance-none checked:bg-gradient-to-r checked:from-parque-lime checked:to-parque-green"
-                  >
-                  <label for="privacy" class="text-sm text-gray-800 leading-relaxed cursor-pointer font-medium">
-                    Acepto la <a href="#" class="text-parque-green font-bold hover:text-parque-lime transition-all duration-200 underline decoration-transparent hover:decoration-current">Política de Privacidad</a> y el tratamiento de mis datos personales
-                  </label>
-                </div>
+              <div class="flex items-start space-x-2 md:space-x-3">
+                <input
+                  v-model="form.privacy"
+                  type="checkbox"
+                  id="privacy"
+                  class="mt-0.5 w-5 h-5 border border-gray-300 rounded cursor-pointer focus:ring-1 focus:ring-parque-lime accent-parque-lime flex-shrink-0"
+                >
+                <label for="privacy" class="text-xs md:text-sm text-gray-700 leading-relaxed cursor-pointer">
+                  Acepto la <a href="#" class="text-parque-green font-medium hover:text-parque-lime transition-colors">Política de Privacidad</a> y el tratamiento de mis datos
+                </label>
               </div>
 
               <!-- Submit Button -->
-              <div class="pt-4">
-                <button
-                  type="submit"
-                  class="w-full bg-gradient-to-r from-parque-lime via-parque-green to-parque-green text-white font-bold text-lg py-5 px-8 rounded-xl shadow-xl hover:shadow-2xl hover:scale-105 active:scale-100 transition-all duration-300 ease-out relative overflow-hidden group border-2 border-transparent hover:border-white/30"
-                >
-                  <span class="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span class="relative z-10 flex items-center justify-center font-black tracking-wide">
-                    Enviar consulta
-                    <svg class="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                    </svg>
-                  </span>
-                </button>
-              </div>
+              <button
+                type="submit"
+                :disabled="isLoading"
+                class="w-full bg-parque-lime hover:bg-parque-green disabled:bg-gray-400 text-white font-semibold text-sm md:text-base py-2.5 md:py-3 px-6 md:px-8 rounded-lg transition-all duration-200 hover:shadow-lg active:scale-95 disabled:cursor-not-allowed"
+              >
+                {{ isLoading ? 'Enviando...' : 'Enviar consulta' }}
+              </button>
             </form>
           </div>
         </div>
 
         <!-- Success Message (hidden by default) -->
-        <div v-if="isSubmitted" class="mt-8 p-6 bg-white rounded-xl text-center shadow-xl animate-in border-l-4 border-parque-lime">
+        <div v-if="isSubmitted" class="mt-8 p-6 bg-white rounded-xl text-center shadow-xl animate-in border-l-4 border-parque-lime" data-aos="zoom-in-up">
           <div class="flex items-center justify-center mb-3">
             <svg class="w-8 h-8 text-parque-lime animate-bounce" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
@@ -146,33 +152,87 @@ const form = ref({
   phone: '',
   email: '',
   message: '',
-  privacy: false
+  privacy: false,
+  website: '' // Honeypot field
 })
 
 const isSubmitted = ref(false)
+const isLoading = ref(false)
+const errorMessage = ref('')
+const formSubmitTime = ref<number | null>(null)
+
+// Registrar tiempo cuando el usuario interactúa por primera vez
+const onFormInteraction = () => {
+  if (!formSubmitTime.value) {
+    formSubmitTime.value = Date.now()
+  }
+}
 
 const handleSubmit = async () => {
-  console.log('Formulario enviado:', form.value)
-
-  // Reset form and show success message
-  isSubmitted.value = true
-
-  // Reset form fields
-  form.value = {
-    name: '',
-    phone: '',
-    email: '',
-    message: '',
-    privacy: false
+  // Anti-bot checks
+  // 1. Honeypot: Si el campo website está lleno, es un bot
+  if (form.value.website) {
+    console.log('Bot detectado: honeypot field completo')
+    return
   }
 
-  // Hide success message after 5 seconds
-  setTimeout(() => {
-    isSubmitted.value = false
-  }, 5000)
+  // 2. Time check: Si se envía en menos de 2 segundos, probablemente sea un bot
+  if (formSubmitTime.value && Date.now() - formSubmitTime.value < 2000) {
+    errorMessage.value = 'Por favor espera un momento antes de enviar'
+    return
+  }
 
-  // Aquí iría la lógica para enviar el formulario
-  // por ejemplo: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(form.value) })
+  // 3. Validar que privacy esté aceptado
+  if (!form.value.privacy) {
+    errorMessage.value = 'Debes aceptar la Política de Privacidad'
+    return
+  }
+
+  isLoading.value = true
+  errorMessage.value = ''
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: form.value.name,
+        email: form.value.email,
+        phone: form.value.phone,
+        message: form.value.message
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error('Error al enviar el formulario')
+    }
+
+    // Mostrar mensaje de éxito
+    isSubmitted.value = true
+
+    // Reset form
+    form.value = {
+      name: '',
+      phone: '',
+      email: '',
+      message: '',
+      privacy: false,
+      website: ''
+    }
+    formSubmitTime.value = null
+
+    // Ocultar mensaje después de 5 segundos
+    setTimeout(() => {
+      isSubmitted.value = false
+    }, 5000)
+  } catch (error) {
+    errorMessage.value = 'Error al enviar el formulario. Intenta nuevamente.'
+    console.error('Error:', error)
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 

@@ -1,23 +1,26 @@
 <template>
-  <section class="bg-white" :class="{ 'fixed inset-0 z-50 fullscreen-map-active': isFullscreen, 'py-24': !isFullscreen }">
-    <div class="h-full" :class="{ 'container mx-auto px-6': !isFullscreen }">
-      <div v-if="!isFullscreen" class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-bold text-parque-dark mb-8">
+  <section class="bg-white" :class="{ 'fixed inset-0 z-50 fullscreen-map-active': isFullscreen, 'py-12 md:py-24': !isFullscreen }">
+    <div class="h-full" :class="{ 'container mx-auto px-4 md:px-6': !isFullscreen }">
+      <div v-if="!isFullscreen" class="text-center mb-6 md:mb-12" data-aos="fade-up">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-parque-dark mb-4 md:mb-8">
           Terrenos Barrio <span class="text-parque-lime">Privado</span>
         </h2>
       </div>
 
       <!-- Map Interactive -->
       <div class="w-full h-full" :class="{ 'mx-auto': !isFullscreen }">
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col" :class="[isFullscreen ? 'h-screen' : 'h-full', { 'rounded-none': isFullscreen }]">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col" :class="[isFullscreen ? 'h-screen' : 'h-full', { 'rounded-none': isFullscreen }]" data-aos="zoom-in-up" data-aos-delay="100">
           <!-- Header con instrucciones -->
-          <div v-if="!isFullscreen" class="bg-gray-50 border-b px-8 py-3">
-            <p class="text-gray-600 text-xs font-semibold uppercase tracking-wide text-center">Usa la ruedita para zoom • Arrastra para navegar • Doble click para reiniciar</p>
+          <div v-if="!isFullscreen" class="bg-gray-50 border-b px-4 md:px-8 py-2 md:py-3">
+            <p class="text-gray-600 text-xs font-semibold uppercase tracking-wide text-center leading-relaxed">
+              <span class="block sm:inline">Usa la ruedita para zoom • Arrastra para navegar</span>
+              <span class="block sm:inline sm:before:content-['•'] sm:before:mx-2">Doble click para reiniciar</span>
+            </p>
           </div>
 
           <!-- Map Container -->
           <div class="relative flex-1">
-            <div class="map-container overflow-hidden bg-gray-100 w-full" :class="isFullscreen ? 'h-full' : 'h-64 md:h-80 lg:h-96'" ref="mapContainer">
+            <div class="map-container overflow-hidden bg-gray-100 w-full" :class="isFullscreen ? 'h-full' : 'h-56 sm:h-64 md:h-80 lg:h-96'" ref="mapContainer">
               <img
                 ref="mapImage"
                 src="/assets/plano.jpg"
@@ -28,72 +31,72 @@
             </div>
 
             <!-- Control Buttons -->
-            <div class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
+            <div class="absolute bottom-4 md:bottom-6 right-4 md:right-6 flex flex-col gap-2 z-10">
               <button
                 @click="zoomIn"
-                class="bg-parque-lime text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                class="bg-parque-lime text-white w-10 md:w-12 h-10 md:h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
                 aria-label="Aumentar zoom"
                 title="Aumentar zoom (+)"
               >
-                <span class="text-2xl font-bold">+</span>
+                <span class="text-lg md:text-2xl font-bold">+</span>
               </button>
 
               <button
                 @click="zoomOut"
-                class="bg-parque-lime text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                class="bg-parque-lime text-white w-10 md:w-12 h-10 md:h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
                 aria-label="Reducir zoom"
                 title="Reducir zoom (-)"
               >
-                <span class="text-3xl font-bold leading-none">−</span>
+                <span class="text-2xl md:text-3xl font-bold leading-none">−</span>
               </button>
 
               <button
                 @click="resetMap"
-                class="bg-parque-dark text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                class="bg-parque-dark text-white w-10 md:w-12 h-10 md:h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
                 aria-label="Reiniciar vista"
                 title="Reiniciar vista"
               >
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 md:w-6 h-5 md:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4 12a8 8 0 018-8V2.5M4 12a8 8 0 008 8v1.5M20 12a8 8 0 01-8 8M20 12a8 8 0 00-8-8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
 
               <button
                 @click="toggleFullscreen"
-                class="bg-parque-green text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
+                class="bg-parque-green text-white w-10 md:w-12 h-10 md:h-12 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200 flex items-center justify-center"
                 aria-label="Pantalla completa"
                 title="Pantalla completa"
               >
-                <svg v-if="!isFullscreen" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg v-if="!isFullscreen" class="w-5 md:w-6 h-5 md:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
                 </svg>
-                <svg v-else class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg v-else class="w-5 md:w-6 h-5 md:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
                 </svg>
               </button>
             </div>
 
             <!-- Zoom Level Indicator -->
-            <div class="absolute top-6 left-6 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-sm font-semibold text-parque-dark shadow-lg">
+            <div class="absolute top-4 md:top-6 left-4 md:left-6 bg-white/90 backdrop-blur px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-semibold text-parque-dark shadow-lg">
               {{ zoomLevel.toFixed(1) }}x
             </div>
           </div>
 
           <!-- Legend improved - Normal view -->
-          <div v-if="!isFullscreen" class="bg-gray-50 px-8 py-4 border-t">
+          <div v-if="!isFullscreen" class="bg-gray-50 px-4 md:px-8 py-4 border-t">
             <p class="text-xs font-semibold text-gray-600 uppercase mb-3">Leyenda</p>
-            <div class="flex flex-wrap items-center gap-8">
-              <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-green-500 rounded-lg shadow-sm"></div>
-                <span class="text-sm text-gray-700 font-medium">Terreno Disponible</span>
+            <div class="flex flex-wrap items-center gap-4 md:gap-8">
+              <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-green-500 rounded-lg shadow-sm flex-shrink-0"></div>
+                <span class="text-xs md:text-sm text-gray-700 font-medium">Terreno Disponible</span>
               </div>
-              <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-red-300 rounded-lg shadow-sm"></div>
-                <span class="text-sm text-gray-700 font-medium">Casas Construidas</span>
+              <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-red-300 rounded-lg shadow-sm flex-shrink-0"></div>
+                <span class="text-xs md:text-sm text-gray-700 font-medium">Casas Construidas</span>
               </div>
-              <div class="flex items-center gap-3">
-                <div class="w-6 h-6 bg-orange-700 rounded-lg shadow-sm"></div>
-                <span class="text-sm text-gray-700 font-medium">Amenities</span>
+              <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-orange-700 rounded-lg shadow-sm flex-shrink-0"></div>
+                <span class="text-xs md:text-sm text-gray-700 font-medium">Amenities</span>
               </div>
             </div>
           </div>
