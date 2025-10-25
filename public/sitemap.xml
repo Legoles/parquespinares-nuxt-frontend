@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+
+  <!-- Home Page -->
+  <url>
+    <loc>https://www.barrioprivadoparquepinares.com</loc>
+    <lastmod>2025-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.barrioprivadoparquepinares.com/og-image.jpg</image:loc>
+      <image:title>Barrio Privado Parque Pinares - Terrenos en Maldonado</image:title>
+    </image:image>
+  </url>
+
+</urlset>

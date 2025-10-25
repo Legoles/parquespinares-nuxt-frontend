@@ -1,2 +1,32 @@
-User-Agent: *
-Disallow:
+# Robots.txt para Parque Pinares
+# Este archivo le dice a los buscadores qué pueden rastrear
+
+# Permitir acceso general
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.nuxt/
+Disallow: /node_modules/
+
+# Permitir acceso a Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Permitir acceso a Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Bloquear bots maliciosos
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Ubicación del sitemap
+Sitemap: https://www.barrioprivadoparquepinares.com/sitemap.xml

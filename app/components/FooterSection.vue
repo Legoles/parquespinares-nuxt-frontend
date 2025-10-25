@@ -7,7 +7,7 @@
         </a>
         <div class="text-center md:text-right">
           <p class="text-sm text-gray-400">
-            &copy; 2024 Parque Pinares. Todos los derechos reservados.
+            &copy; 2025 Parque Pinares. Todos los derechos reservados.
           </p>
           <p class="text-xs text-gray-500 mt-2">
             Diseñado con pasión por la sustentabilidad

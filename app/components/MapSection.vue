@@ -3,7 +3,7 @@
     <div class="h-full" :class="{ 'container mx-auto px-6': !isFullscreen }">
       <div v-if="!isFullscreen" class="text-center mb-12">
         <h2 class="text-4xl md:text-5xl font-bold text-parque-dark mb-8">
-          Plan Maestro del <span class="text-parque-lime">Proyecto</span>
+          Terrenos Barrio <span class="text-parque-lime">Privado</span>
         </h2>
       </div>
 
@@ -12,7 +12,7 @@
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col" :class="[isFullscreen ? 'h-screen' : 'h-full', { 'rounded-none': isFullscreen }]">
           <!-- Header con instrucciones -->
           <div v-if="!isFullscreen" class="bg-gray-50 border-b px-8 py-3">
-            <p class="text-gray-600 text-xs font-semibold uppercase tracking-wide">Usa la ruedita para zoom • Arrastra para navegar • Doble click para reiniciar</p>
+            <p class="text-gray-600 text-xs font-semibold uppercase tracking-wide text-center">Usa la ruedita para zoom • Arrastra para navegar • Doble click para reiniciar</p>
           </div>
 
           <!-- Map Container -->
@@ -80,9 +80,9 @@
           </div>
 
           <!-- Legend improved - Normal view -->
-          <div v-if="!isFullscreen" class="bg-gray-50 px-8 py-6 border-t">
-            <p class="text-xs font-semibold text-gray-600 uppercase mb-4">Leyenda</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div v-if="!isFullscreen" class="bg-gray-50 px-8 py-4 border-t">
+            <p class="text-xs font-semibold text-gray-600 uppercase mb-3">Leyenda</p>
+            <div class="flex flex-wrap items-center gap-8">
               <div class="flex items-center gap-3">
                 <div class="w-6 h-6 bg-green-500 rounded-lg shadow-sm"></div>
                 <span class="text-sm text-gray-700 font-medium">Terreno Disponible</span>
@@ -135,7 +135,7 @@ let panzoomInstance: ReturnType<typeof panzoom> | null = null
 const zoomIn = () => {
   if (panzoomInstance) {
     const transform = panzoomInstance.getTransform()
-    const newZoom = Math.min(transform.scale * 1.2, 5)
+    const newZoom = Math.min(transform.scale * 1.2, 15)
     panzoomInstance.smoothZoom(0, 0, newZoom / transform.scale)
     zoomLevel.value = newZoom
   }
@@ -204,7 +204,7 @@ onMounted(() => {
   if (mapContainer.value && mapImage.value) {
     // Inicializar panzoom
     panzoomInstance = panzoom(mapImage.value, {
-      maxZoom: 5,
+      maxZoom: 15,
       minZoom: 1,
       zoomDoubleClickSpeed: 1.5,
       smoothScroll: true,
@@ -217,7 +217,6 @@ onMounted(() => {
       if (panzoomInstance) {
         e.preventDefault()
         const delta = e.deltaY > 0 ? 0.8 : 1.2
-        const transform = panzoomInstance.getTransform()
         panzoomInstance.smoothZoom(e.clientX, e.clientY, delta)
       }
     }, { passive: false })

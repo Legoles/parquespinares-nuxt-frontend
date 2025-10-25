@@ -4,7 +4,6 @@
     <HeroSectionPage />
     <MapSection />
     <FeaturesSection />
-    <AmenitiesShowcaseSection />
     <CarouselSection />
     <ContactSection />
     <FooterSection />
