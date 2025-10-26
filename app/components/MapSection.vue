@@ -22,8 +22,9 @@
           <div class="relative flex-1">
             <div class="map-container overflow-hidden bg-gray-100 w-full" :class="isFullscreen ? 'h-full' : 'h-56 sm:h-64 md:h-80 lg:h-96'" ref="mapContainer">
               <img
+                v-if="mapImageUrl"
                 ref="mapImage"
-                src="/assets/plano.jpg"
+                :src="mapImageUrl"
                 alt="Plan maestro interactivo del proyecto Parque Pinares"
                 class="select-none cursor-grab active:cursor-grabbing"
                 draggable="false"
@@ -133,6 +134,7 @@ const mapContainer = ref<HTMLElement | null>(null)
 const mapImage = ref<HTMLImageElement | null>(null)
 const zoomLevel = ref(1)
 const isFullscreen = ref(false)
+const mapImageUrl = ref('/assets/plano.jpg') // Imagen predeterminada
 let panzoomInstance: ReturnType<typeof panzoom> | null = null
 
 const zoomIn = () => {
@@ -204,8 +206,25 @@ watch(isFullscreen, () => {
 })
 
 onMounted(() => {
-  if (mapContainer.value && mapImage.value) {
-    // Inicializar panzoom
+  // Cargar imagen del localStorage si existe
+  const savedMapUrl = localStorage.getItem('mapImageUrl')
+  if (savedMapUrl) {
+    mapImageUrl.value = savedMapUrl
+  }
+
+  // Escuchar cambios de imagen desde la página admin
+  window.addEventListener('mapImageUpdated', (event: any) => {
+    if (event.detail.url) {
+      mapImageUrl.value = event.detail.url
+    } else {
+      mapImageUrl.value = '/assets/plano.jpg'
+    }
+  })
+
+  // Esperar un pequeño delay para que la imagen se renderice
+  setTimeout(() => {
+    if (mapContainer.value && mapImage.value) {
+      // Inicializar panzoom
     panzoomInstance = panzoom(mapImage.value, {
       maxZoom: 15,
       minZoom: 1,
@@ -290,7 +309,8 @@ onMounted(() => {
     mapImage.value.addEventListener('dblclick', () => {
       resetMap()
     })
-  }
+    }
+  }, 100)
 })
 </script>
 
