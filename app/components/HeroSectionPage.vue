@@ -23,13 +23,8 @@
       <!-- Vignette for depth -->
       <div class="absolute inset-0 bg-radial-vignette opacity-40"></div>
     </div>
-    <div class="relative h-full flex flex-col justify-center items-center text-center px-4 md:px-6">
+    <div class="relative h-full flex flex-col justify-center items-center text-center px-4 md:px-6 -mt-16 sm:-mt-12 md:mt-0">
       <div class="fade-in space-y-4 md:space-y-6 max-w-4xl w-full">
-        <!-- Badge -->
-        <span class="inline-block bg-parque-lime text-white px-6 md:px-8 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest shadow-2xl" data-aos="fade-up" data-aos-delay="0">
-          Últimas Oportunidades
-        </span>
-
         <!-- Main Title -->
         <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight" style="text-shadow: 0 1px 3px rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="50">
           <span class="text-white block">ÚLTIMOS</span>

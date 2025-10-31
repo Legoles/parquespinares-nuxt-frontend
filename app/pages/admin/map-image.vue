@@ -89,11 +89,15 @@ const error = ref('')
 const fileInput = ref<HTMLInputElement | null>(null)
 const currentMapUrl = ref('')
 
-// Cargar URL guardada del localStorage al montar
-onMounted(() => {
-  const saved = localStorage.getItem('mapImageUrl')
-  if (saved) {
-    currentMapUrl.value = saved
+// Cargar URL actual del mapa desde el API
+onMounted(async () => {
+  try {
+    const response = await $fetch('/api/get-map-url')
+    if (response.url) {
+      currentMapUrl.value = response.url
+    }
+  } catch (err) {
+    console.log('No hay imagen custom aún o error al cargar')
   }
 })
 
@@ -112,10 +116,6 @@ const uploadImage = async () => {
   try {
     const formData = new FormData()
     formData.append('file', selectedFile.value)
-    // Pasar URL anterior para borrarla
-    if (currentMapUrl.value) {
-      formData.append('previousUrl', currentMapUrl.value)
-    }
 
     const response = await $fetch('/api/upload-map', {
       method: 'POST',
@@ -123,9 +123,6 @@ const uploadImage = async () => {
     })
 
     uploadedUrl.value = response.url
-
-    // Guardar en localStorage para persistencia
-    localStorage.setItem('mapImageUrl', response.url)
     currentMapUrl.value = response.url
 
     // Emitir evento global para que MapSection se actualice
@@ -151,14 +148,21 @@ const copyToClipboard = () => {
   alert('URL copiada al portapapeles')
 }
 
-const resetToDefault = () => {
+const resetToDefault = async () => {
   if (confirm('¿Restaurar la imagen predeterminada del mapa?')) {
-    localStorage.removeItem('mapImageUrl')
-    currentMapUrl.value = ''
-    uploadedUrl.value = ''
-    window.dispatchEvent(
-      new CustomEvent('mapImageUpdated', { detail: { url: null } })
-    )
+    try {
+      // Llamar al API para eliminar la imagen
+      await $fetch('/api/delete-map', { method: 'POST' })
+
+      currentMapUrl.value = ''
+      uploadedUrl.value = ''
+
+      window.dispatchEvent(
+        new CustomEvent('mapImageUpdated', { detail: { url: null } })
+      )
+    } catch (err) {
+      error.value = 'Error al restaurar imagen predeterminada'
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { put, del } from '@vercel/blob'
+import { put } from '@vercel/blob'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -22,31 +22,11 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Obtener URL anterior si existe para borrarla (viene en FormData)
-    const previousUrlField = form.find((f: any) => f.name === 'previousUrl')
-    const previousUrl = previousUrlField?.data?.toString() || null
-
-    if (previousUrl && previousUrl !== '/assets/plano.jpg') {
-      try {
-        // Extraer el pathname de la URL para borrar de Vercel
-        const url = new URL(previousUrl)
-        const pathname = url.pathname.split('/').pop() || ''
-
-        if (pathname) {
-          await del(pathname, {
-            token: process.env.BLOB_READ_WRITE_TOKEN
-          })
-        }
-      } catch (deleteError) {
-        // Log del error pero no fallar por eso
-        console.warn('Advertencia al borrar imagen anterior:', deleteError)
-      }
-    }
-
-    // Sube al Blob Storage de Vercel
-    const blob = await put(`mapa-parque-${Date.now()}.jpg`, file.data, {
+    // Sube al Blob Storage de Vercel con nombre fijo (sobreescribe automáticamente)
+    const blob = await put('mapa-parque.jpg', file.data, {
       access: 'public',
-      token: process.env.BLOB_READ_WRITE_TOKEN
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      addRandomSuffix: false // Importante: no agregar sufijo aleatorio
     })
 
     return {

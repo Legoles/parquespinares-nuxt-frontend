@@ -80,7 +80,7 @@ const features = ref([
   {
     id: 2,
     title: 'A 15 minutos del centro',
-    description: 'Conectividad ideal con todas las comodidades',
+    description: 'Cerca de todo y lejos del ruido',
     icon: 'mdi:clock'
   },
   {
@@ -91,8 +91,8 @@ const features = ref([
   },
   {
     id: 4,
-    title: 'Acceso controlado portería',
-    description: 'Seguridad premium y control de accesos',
+    title: 'Acceso privado y automático',
+    description: 'Calles privadas y seguridad premium',
     icon: 'mdi:lock'
   },
   {
@@ -104,26 +104,44 @@ const features = ref([
   {
     id: 6,
     title: 'Electricidad subterránea',
-    description: 'Infraestructura moderna y estética',
+    description: 'Para disfrutar del paisaje natural',
     icon: 'mdi:lightning-bolt'
   },
   {
     id: 7,
     title: 'Piscinas climatizadas',
-    description: 'Disfruta todo el año del confort',
+    description: 'Para adultos y niños',
     icon: 'mdi:pool'
   },
   {
     id: 8,
     title: 'Club house completo',
-    description: 'Sala de juegos, gimnasio y vestuarios',
+    description: 'Apto para reuniones, hasta 50 personas',
     icon: 'mdi:home'
   },
   {
     id: 9,
     title: 'Canchas de pádel y tenis',
-    description: 'Espacios deportivos de primer nivel',
+    description: 'Canchas blandas de Lisonda',
     icon: 'mdi:tennis'
+  },
+  {
+    id: 10,
+    title: 'Sala de juegos',
+    description: 'Más el que yo quiera',
+    icon: 'mdi:gamepad-variant'
+  },
+  {
+    id: 11,
+    title: 'Gimnasio',
+    description: 'Con equipo de última generación',
+    icon: 'mdi:dumbbell'
+  },
+  {
+    id: 12,
+    title: 'Vestuario',
+    description: 'Para damas y caballeros',
+    icon: 'mdi:hanger'
   }
 ])
 </script>

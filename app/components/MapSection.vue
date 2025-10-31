@@ -85,18 +85,18 @@
 
           <!-- Legend improved - Normal view -->
           <div v-if="!isFullscreen" class="bg-gray-50 px-4 md:px-8 py-4 border-t">
-            <p class="text-xs font-semibold text-gray-600 uppercase mb-3">Leyenda</p>
+            <p class="text-xs font-semibold text-gray-600 uppercase mb-3">Índice</p>
             <div class="flex flex-wrap items-center gap-4 md:gap-8">
               <div class="flex items-center gap-2 md:gap-3">
-                <div class="w-5 md:w-6 h-5 md:h-6 bg-green-500 rounded-lg shadow-sm flex-shrink-0"></div>
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-[#01B937] rounded-lg shadow-sm flex-shrink-0"></div>
                 <span class="text-xs md:text-sm text-gray-700 font-medium">Terreno Disponible</span>
               </div>
               <div class="flex items-center gap-2 md:gap-3">
-                <div class="w-5 md:w-6 h-5 md:h-6 bg-red-300 rounded-lg shadow-sm flex-shrink-0"></div>
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-[#FF979C] rounded-lg shadow-sm flex-shrink-0"></div>
                 <span class="text-xs md:text-sm text-gray-700 font-medium">Casas Construidas</span>
               </div>
               <div class="flex items-center gap-2 md:gap-3">
-                <div class="w-5 md:w-6 h-5 md:h-6 bg-orange-700 rounded-lg shadow-sm flex-shrink-0"></div>
+                <div class="w-5 md:w-6 h-5 md:h-6 bg-[#E2AD8B] rounded-lg shadow-sm flex-shrink-0"></div>
                 <span class="text-xs md:text-sm text-gray-700 font-medium">Amenities</span>
               </div>
             </div>
@@ -134,7 +134,7 @@ const mapContainer = ref<HTMLElement | null>(null)
 const mapImage = ref<HTMLImageElement | null>(null)
 const zoomLevel = ref(1)
 const isFullscreen = ref(false)
-const mapImageUrl = ref('/assets/plano.jpg') // Imagen predeterminada
+const mapImageUrl = ref('')
 let panzoomInstance: ReturnType<typeof panzoom> | null = null
 
 const zoomIn = () => {
@@ -205,11 +205,14 @@ watch(isFullscreen, () => {
   }, 100)
 })
 
-onMounted(() => {
-  // Cargar imagen del localStorage si existe
-  const savedMapUrl = localStorage.getItem('mapImageUrl')
-  if (savedMapUrl) {
-    mapImageUrl.value = savedMapUrl
+onMounted(async () => {
+  // Cargar URL de la imagen desde el API
+  try {
+    const response = await $fetch('/api/get-map-url')
+    mapImageUrl.value = response.url || '/assets/plano.jpg'
+  } catch (err) {
+    // Si falla, usar imagen por defecto
+    mapImageUrl.value = '/assets/plano.jpg'
   }
 
   // Escuchar cambios de imagen desde la página admin
@@ -224,7 +227,7 @@ onMounted(() => {
   // Esperar un pequeño delay para que la imagen se renderice
   setTimeout(() => {
     if (mapContainer.value && mapImage.value) {
-      // Inicializar panzoom
+      // Inicializar panzoom con límites personalizados
     panzoomInstance = panzoom(mapImage.value, {
       maxZoom: 15,
       minZoom: 1,
@@ -232,7 +235,52 @@ onMounted(() => {
       smoothScroll: true,
       filterKey: () => true,
       beforeWheel: () => false,
+      beforeMouseDown: function(e) {
+        return false;
+      },
+      onTouch: function(e) {
+        return false;
+      }
     })
+
+    // Función para aplicar límites de pan
+    const applyPanBounds = () => {
+      if (!panzoomInstance || !mapImage.value || !mapContainer.value) return
+
+      const transform = panzoomInstance.getTransform()
+      const containerWidth = mapContainer.value.offsetWidth
+      const containerHeight = mapContainer.value.offsetHeight
+      const imgWidth = mapImage.value.offsetWidth * transform.scale
+      const imgHeight = mapImage.value.offsetHeight * transform.scale
+
+      let newX = transform.x
+      let newY = transform.y
+
+      // Limitar X
+      const minX = containerWidth - imgWidth
+      const maxX = 0
+      if (imgWidth > containerWidth) {
+        newX = Math.max(minX, Math.min(maxX, transform.x))
+      } else {
+        newX = (containerWidth - imgWidth) / 2
+      }
+
+      // Limitar Y
+      const minY = containerHeight - imgHeight
+      const maxY = 0
+      if (imgHeight > containerHeight) {
+        newY = Math.max(minY, Math.min(maxY, transform.y))
+      } else {
+        newY = (containerHeight - imgHeight) / 2
+      }
+
+      if (newX !== transform.x || newY !== transform.y) {
+        panzoomInstance.moveTo(newX, newY)
+      }
+    }
+
+    // Aplicar límites en cada transformación
+    panzoomInstance.on('transform', applyPanBounds)
 
     // Agregar listener para zoom con rueda
     mapContainer.value.addEventListener('wheel', (e) => {
@@ -269,15 +317,16 @@ onMounted(() => {
       mapImage.value.addEventListener('load', centerImage)
     }
 
-    // Actualizar zoomLevel en cada cambio
-    panzoomInstance.on('transform', () => {
+    // Actualizar zoomLevel en cada cambio (este listener ya está agregado arriba con applyPanBounds)
+    // Solo actualizamos el valor del zoom aquí
+    const originalTransformHandler = panzoomInstance.on('transform', () => {
       if (panzoomInstance) {
         const transform = panzoomInstance.getTransform()
         zoomLevel.value = transform.scale
       }
     })
 
-    // Permitir pan con click y arrastre
+    // Permitir pan con click y arrastre con límites
     let isDragging = false
     let startX = 0
     let startY = 0
@@ -294,10 +343,37 @@ onMounted(() => {
     })
 
     document.addEventListener('mousemove', (e) => {
-      if (isDragging && mapImage.value && panzoomInstance) {
+      if (isDragging && mapImage.value && panzoomInstance && mapContainer.value) {
         const deltaX = e.clientX - startX
         const deltaY = e.clientY - startY
-        panzoomInstance.moveTo(startPan.x + deltaX, startPan.y + deltaY)
+
+        const transform = panzoomInstance.getTransform()
+        const containerWidth = mapContainer.value.offsetWidth
+        const containerHeight = mapContainer.value.offsetHeight
+        const imgWidth = mapImage.value.offsetWidth * transform.scale
+        const imgHeight = mapImage.value.offsetHeight * transform.scale
+
+        let newX = startPan.x + deltaX
+        let newY = startPan.y + deltaY
+
+        // Aplicar límites
+        const minX = containerWidth - imgWidth
+        const maxX = 0
+        if (imgWidth > containerWidth) {
+          newX = Math.max(minX, Math.min(maxX, newX))
+        } else {
+          newX = (containerWidth - imgWidth) / 2
+        }
+
+        const minY = containerHeight - imgHeight
+        const maxY = 0
+        if (imgHeight > containerHeight) {
+          newY = Math.max(minY, Math.min(maxY, newY))
+        } else {
+          newY = (containerHeight - imgHeight) / 2
+        }
+
+        panzoomInstance.moveTo(newX, newY)
       }
     })
 
