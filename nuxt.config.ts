@@ -2,8 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
-  modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', 'nuxt-gtag'],
   css: ['~/assets/css/main.css'],
+
+  // Google Analytics Configuration
+  gtag: {
+    id: 'G-SKZMVN370X'
+  },
 
   // SEO Configuration
   app: {

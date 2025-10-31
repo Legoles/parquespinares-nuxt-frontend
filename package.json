@@ -26,6 +26,7 @@
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/icon": "^2.1.0",
-    "@types/nodemailer": "^6.4.15"
+    "@types/nodemailer": "^6.4.15",
+    "nuxt-gtag": "^4.1.0"
   }
 }
