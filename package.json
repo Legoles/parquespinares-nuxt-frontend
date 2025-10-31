@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@vercel/blob": "^2.0.0",
+    "@vercel/speed-insights": "^1.2.0",
     "aos": "^2.3.4",
     "nodemailer": "^6.9.13",
     "nuxt": "^4.1.3",

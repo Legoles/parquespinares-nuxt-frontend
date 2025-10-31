@@ -128,7 +128,7 @@ const features = ref([
   {
     id: 10,
     title: 'Sala de juegos',
-    description: 'Más el que yo quiera',
+    description: 'Espacio de entretenimiento para toda la familia',
     icon: 'mdi:gamepad-variant'
   },
   {
