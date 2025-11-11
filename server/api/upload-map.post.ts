@@ -26,11 +26,15 @@ export default defineEventHandler(async (event) => {
     const blob = await put('mapa-parque.jpg', file.data, {
       access: 'public',
       token: process.env.BLOB_READ_WRITE_TOKEN,
-      addRandomSuffix: false // Importante: no agregar sufijo aleatorio
+      addRandomSuffix: false, // Importante: no agregar sufijo aleatorio
+      allowOverwrite: true // Permite sobrescribir el archivo existente
     })
 
+    // Agregar timestamp para romper el cache del navegador y CDN
+    const urlWithCacheBuster = `${blob.url}?v=${Date.now()}`
+
     return {
-      url: blob.url,
+      url: urlWithCacheBuster,
       pathname: blob.pathname
     }
 

@@ -8,8 +8,10 @@ export default defineEventHandler(async () => {
     })
 
     if (blob && blob.url) {
+      // Agregar timestamp para romper el cache del navegador
+      const urlWithCacheBuster = `${blob.url}?v=${Date.now()}`
       return {
-        url: blob.url,
+        url: urlWithCacheBuster,
         exists: true
       }
     }
