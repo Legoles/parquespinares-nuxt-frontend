@@ -24,6 +24,7 @@
               <img
                 v-if="mapImageUrl"
                 ref="mapImage"
+                :key="mapImageUrl"
                 :src="mapImageUrl"
                 alt="Plan maestro interactivo del proyecto Parque Pinares"
                 class="select-none cursor-grab active:cursor-grabbing"
@@ -216,11 +217,23 @@ onMounted(async () => {
   }
 
   // Escuchar cambios de imagen desde la página admin
-  window.addEventListener('mapImageUpdated', (event: any) => {
-    if (event.detail.url) {
-      mapImageUrl.value = event.detail.url
-    } else {
-      mapImageUrl.value = '/assets/plano.jpg'
+  window.addEventListener('mapImageUpdated', async (event: any) => {
+    const newUrl = event.detail.url || '/assets/plano.jpg'
+
+    // Precargar la imagen antes de actualizar el estado
+    try {
+      await new Promise((resolve, reject) => {
+        const img = new Image()
+        img.onload = () => resolve(true)
+        img.onerror = () => reject(new Error('Error al cargar imagen'))
+        img.src = newUrl
+      })
+
+      mapImageUrl.value = newUrl
+    } catch (err) {
+      console.error('Error al precargar imagen:', err)
+      // Actualizar de todas formas
+      mapImageUrl.value = newUrl
     }
   })
 

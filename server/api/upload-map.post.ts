@@ -27,7 +27,8 @@ export default defineEventHandler(async (event) => {
       access: 'public',
       token: process.env.BLOB_READ_WRITE_TOKEN,
       addRandomSuffix: false, // Importante: no agregar sufijo aleatorio
-      allowOverwrite: true // Permite sobrescribir el archivo existente
+      allowOverwrite: true, // Permite sobrescribir el archivo existente
+      cacheControlMaxAge: 60 // Tiempo mínimo de caché en Vercel (60 segundos)
     })
 
     // Agregar timestamp para romper el cache del navegador y CDN

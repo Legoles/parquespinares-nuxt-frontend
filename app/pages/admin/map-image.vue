@@ -37,7 +37,7 @@
       <div class="preview-section">
         <h2>Imagen Actual del Mapa</h2>
         <div v-if="currentMapUrl" class="preview-container">
-          <img :src="currentMapUrl" alt="Mapa actual" />
+          <img :key="currentMapUrl" :src="currentMapUrl" alt="Mapa actual" />
           <p class="url-text">{{ currentMapUrl }}</p>
         </div>
         <p v-else class="no-image">Sin imagen custom. Usando imagen predeterminada.</p>
@@ -47,7 +47,7 @@
       <div v-if="uploadedUrl" class="success">
         <h3>✓ ¡Imagen subida exitosamente!</h3>
         <div class="result-preview">
-          <img :src="uploadedUrl" alt="Imagen nueva" />
+          <img :key="uploadedUrl" :src="uploadedUrl" alt="Imagen nueva" />
         </div>
         <p class="success-text">La imagen del mapa ha sido actualizada. Recarga la página para verla reflejada.</p>
         <div class="url-info">
@@ -120,6 +120,14 @@ const uploadImage = async () => {
     const response = await $fetch('/api/upload-map', {
       method: 'POST',
       body: formData
+    })
+
+    // Precargar la imagen para asegurar que esté en caché fresca
+    await new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => resolve(true)
+      img.onerror = () => reject(new Error('Error al cargar imagen'))
+      img.src = response.url
     })
 
     uploadedUrl.value = response.url
