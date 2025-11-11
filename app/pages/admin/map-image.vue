@@ -94,7 +94,8 @@ onMounted(async () => {
   try {
     const response = await $fetch('/api/get-map-url')
     if (response.url) {
-      currentMapUrl.value = response.url
+      // Agregar timestamp para evitar caché
+      currentMapUrl.value = `${response.url}?v=${Date.now()}`
     }
   } catch (err) {
     console.log('No hay imagen custom aún o error al cargar')
@@ -122,20 +123,23 @@ const uploadImage = async () => {
       body: formData
     })
 
+    // Agregar timestamp para evitar caché de la imagen anterior
+    const urlWithCacheBuster = `${response.url}?v=${Date.now()}`
+
     // Precargar la imagen para asegurar que esté en caché fresca
     await new Promise((resolve, reject) => {
       const img = new Image()
       img.onload = () => resolve(true)
       img.onerror = () => reject(new Error('Error al cargar imagen'))
-      img.src = response.url
+      img.src = urlWithCacheBuster
     })
 
-    uploadedUrl.value = response.url
-    currentMapUrl.value = response.url
+    uploadedUrl.value = urlWithCacheBuster
+    currentMapUrl.value = urlWithCacheBuster
 
     // Emitir evento global para que MapSection se actualice
     window.dispatchEvent(
-      new CustomEvent('mapImageUpdated', { detail: { url: response.url } })
+      new CustomEvent('mapImageUpdated', { detail: { url: urlWithCacheBuster } })
     )
 
     // Limpiar input
