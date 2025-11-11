@@ -7,72 +7,87 @@
       </button>
     </div>
 
+    <!-- Mensajes de notificación -->
+    <div v-if="uploadedUrl" class="notification success-notification">
+      <div class="notification-content">
+        <span class="notification-icon">✓</span>
+        <div class="notification-text">
+          <strong>¡Imagen subida exitosamente!</strong>
+          <p>La imagen del mapa ha sido actualizada.</p>
+        </div>
+        <button @click="uploadedUrl = ''" class="btn-close-notification">×</button>
+      </div>
+    </div>
+
+    <div v-if="error" class="notification error-notification">
+      <div class="notification-content">
+        <span class="notification-icon">⚠</span>
+        <div class="notification-text">
+          <strong>Error</strong>
+          <p>{{ error }}</p>
+        </div>
+        <button @click="error = ''" class="btn-close-notification">×</button>
+      </div>
+    </div>
+
     <div class="admin-box">
+      <div class="content-grid">
+        <!-- Columna izquierda: Formulario de subida -->
+        <div class="upload-section">
+          <h2>Subir Nueva Imagen</h2>
 
-      <!-- Formulario de subida -->
-      <div class="upload-section">
-        <h2>Cambiar Imagen del Mapa</h2>
+          <div class="file-input-wrapper">
+            <input
+              id="fileInput"
+              type="file"
+              @change="onFileSelected"
+              accept="image/*"
+              ref="fileInput"
+            />
+            <label for="fileInput" class="file-label">
+              <span class="file-icon">📁</span>
+              <span v-if="!selectedFile">Selecciona una imagen</span>
+              <span v-else class="file-selected">{{ selectedFile.name }}</span>
+            </label>
+          </div>
 
-        <div class="file-input-wrapper">
-          <input
-            id="fileInput"
-            type="file"
-            @change="onFileSelected"
-            accept="image/*"
-            ref="fileInput"
-          />
-          <label for="fileInput">Selecciona una imagen</label>
+          <button
+            @click="uploadImage"
+            :disabled="!selectedFile || uploading"
+            class="btn-primary"
+          >
+            <span v-if="uploading">⏳ Subiendo...</span>
+            <span v-else>⬆ Subir Imagen</span>
+          </button>
+
+          <div v-if="uploadedUrl" class="url-display">
+            <label>URL de la imagen:</label>
+            <div class="url-copy-wrapper">
+              <input
+                type="text"
+                :value="uploadedUrl"
+                readonly
+                class="url-input"
+              />
+              <button @click="copyToClipboard" class="btn-copy" title="Copiar URL">
+                📋
+              </button>
+            </div>
+          </div>
         </div>
 
-        <button
-          @click="uploadImage"
-          :disabled="!selectedFile || uploading"
-          class="btn-primary"
-        >
-          {{ uploading ? 'Subiendo...' : 'Subir Imagen' }}
-        </button>
-      </div>
-
-      <!-- Vista previa de la imagen actual -->
-      <div class="preview-section">
-        <h2>Imagen Actual del Mapa</h2>
-        <div v-if="currentMapUrl" class="preview-container">
-          <img :key="currentMapUrl" :src="currentMapUrl" alt="Mapa actual" />
-          <p class="url-text">{{ currentMapUrl }}</p>
+        <!-- Columna derecha: Vista previa -->
+        <div class="preview-section">
+          <h2>Imagen Actual</h2>
+          <div v-if="currentMapUrl" class="preview-container">
+            <img :key="currentMapUrl" :src="currentMapUrl" alt="Mapa actual" />
+          </div>
+          <div v-else class="no-image">
+            <span class="no-image-icon">🖼️</span>
+            <p>Sin imagen personalizada</p>
+            <small>Usando imagen predeterminada</small>
+          </div>
         </div>
-        <p v-else class="no-image">Sin imagen custom. Usando imagen predeterminada.</p>
-      </div>
-
-      <!-- Resultado de carga exitosa -->
-      <div v-if="uploadedUrl" class="success">
-        <h3>✓ ¡Imagen subida exitosamente!</h3>
-        <div class="result-preview">
-          <img :key="uploadedUrl" :src="uploadedUrl" alt="Imagen nueva" />
-        </div>
-        <p class="success-text">La imagen del mapa ha sido actualizada. Recarga la página para verla reflejada.</p>
-        <div class="url-info">
-          <p>URL de la imagen:</p>
-          <input
-            type="text"
-            :value="uploadedUrl"
-            readonly
-            class="url-input"
-          />
-          <button @click="copyToClipboard" class="btn-copy">Copiar URL</button>
-        </div>
-      </div>
-
-      <!-- Mensaje de error -->
-      <div v-if="error" class="error">
-        <p>{{ error }}</p>
-        <button @click="error = ''" class="btn-close">Cerrar</button>
-      </div>
-
-      <!-- Botón para limpiar la imagen custom -->
-      <div v-if="currentMapUrl" class="actions">
-        <button @click="resetToDefault" class="btn-secondary">
-          Restaurar imagen predeterminada
-        </button>
       </div>
     </div>
   </div>
@@ -160,24 +175,6 @@ const copyToClipboard = () => {
   alert('URL copiada al portapapeles')
 }
 
-const resetToDefault = async () => {
-  if (confirm('¿Restaurar la imagen predeterminada del mapa?')) {
-    try {
-      // Llamar al API para eliminar la imagen
-      await $fetch('/api/delete-map', { method: 'POST' })
-
-      currentMapUrl.value = ''
-      uploadedUrl.value = ''
-
-      window.dispatchEvent(
-        new CustomEvent('mapImageUpdated', { detail: { url: null } })
-      )
-    } catch (err) {
-      error.value = 'Error al restaurar imagen predeterminada'
-    }
-  }
-}
-
 const handleLogout = async () => {
   try {
     await $fetch('/api/auth/logout', {
@@ -201,8 +198,8 @@ const handleLogout = async () => {
 }
 
 .admin-header {
-  max-width: 900px;
-  margin: 0 auto 30px;
+  max-width: 1200px;
+  margin: 0 auto 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -236,40 +233,116 @@ const handleLogout = async () => {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Notificaciones */
+.notification {
+  max-width: 1200px;
+  margin: 0 auto 20px;
+  border-radius: 8px;
+  padding: 16px 20px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-notification {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.error-notification {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.notification-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.notification-text {
+  flex: 1;
+}
+
+.notification-text strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.notification-text p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.btn-close-notification {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-close-notification:hover {
+  opacity: 1;
+}
+
+/* Contenedor principal */
 .admin-box {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   background: white;
   border-radius: 12px;
-  padding: 40px;
+  padding: 30px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
-h1 {
-  color: #1e3c72;
-  margin-bottom: 30px;
-  font-size: 28px;
-  text-align: center;
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
 
 h2 {
   color: #2a5298;
-  font-size: 18px;
-  margin: 25px 0 15px;
+  font-size: 20px;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
   border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 10px;
 }
 
-/* Upload Section */
+/* Sección de subida */
 .upload-section {
   background: #f8f9fa;
   padding: 25px;
   border-radius: 8px;
-  margin-bottom: 30px;
+  height: fit-content;
 }
 
 .file-input-wrapper {
-  position: relative;
   margin-bottom: 15px;
 }
 
@@ -277,50 +350,53 @@ input[type="file"] {
   display: none;
 }
 
-input[type="file"] + label {
-  display: block;
-  padding: 12px 15px;
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
   border: 2px dashed #2a5298;
-  border-radius: 6px;
+  border-radius: 8px;
   background: white;
   cursor: pointer;
-  text-align: center;
   color: #2a5298;
   transition: all 0.3s ease;
   font-weight: 500;
+  min-height: 60px;
 }
 
-input[type="file"] + label:hover {
+.file-label:hover {
   background: #f0f4f8;
   border-color: #1e3c72;
 }
 
-input[type="file"]:focus + label {
+.file-icon {
+  font-size: 24px;
+}
+
+.file-selected {
+  color: #1e3c72;
+  font-weight: 600;
+}
+
+input[type="file"]:focus + .file-label {
   outline: 2px solid #2a5298;
   outline-offset: 2px;
 }
 
-/* Buttons */
-.btn-primary,
-.btn-secondary,
-.btn-copy,
-.btn-close {
-  padding: 10px 20px;
+/* Botones */
+.btn-primary {
+  width: 100%;
+  padding: 14px 20px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.btn-primary {
   background: #2a5298;
   color: white;
-  margin-top: 10px;
-  width: 100%;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -336,43 +412,79 @@ input[type="file"]:focus + label {
 }
 
 .btn-secondary {
-  background: #f5a623;
-  color: white;
   width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #dc3545;
+  color: white;
+  margin-top: 15px;
 }
 
 .btn-secondary:hover {
-  background: #e8930f;
+  background: #c82333;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(245, 166, 35, 0.3);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* URL Display */
+.url-display {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.url-display label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.url-copy-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  background: #f8f9fa;
+  color: #495057;
 }
 
 .btn-copy {
-  background: #27ae60;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #28a745;
   color: white;
-  margin-top: 10px;
+  font-size: 18px;
+  transition: all 0.2s ease;
 }
 
 .btn-copy:hover {
-  background: #229954;
+  background: #218838;
+  transform: scale(1.05);
 }
 
-.btn-close {
-  background: #e74c3c;
-  color: white;
-  margin-top: 10px;
-}
-
-.btn-close:hover {
-  background: #c0392b;
-}
-
-/* Preview Section */
+/* Sección de vista previa */
 .preview-section {
   background: #f8f9fa;
   padding: 25px;
   border-radius: 8px;
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .preview-container {
@@ -380,6 +492,7 @@ input[type="file"]:focus + label {
   padding: 15px;
   border-radius: 6px;
   border: 1px solid #e0e0e0;
+  margin-bottom: 15px;
 }
 
 .preview-container img {
@@ -387,103 +500,41 @@ input[type="file"]:focus + label {
   height: auto;
   border-radius: 4px;
   display: block;
-  margin-bottom: 15px;
-}
-
-.url-text {
-  color: #666;
-  font-size: 12px;
-  word-break: break-all;
-  background: #e0e0e0;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 0;
-  font-family: 'Courier New', monospace;
 }
 
 .no-image {
-  color: #999;
+  background: white;
+  padding: 40px 20px;
+  border-radius: 6px;
+  border: 2px dashed #dee2e6;
   text-align: center;
-  padding: 20px;
-  font-style: italic;
+  color: #6c757d;
+  margin-bottom: 15px;
 }
 
-/* Success Message */
-.success {
-  background: #d4edda;
-  border: 2px solid #28a745;
-  border-radius: 8px;
-  padding: 25px;
-  margin-bottom: 30px;
-  color: #155724;
+.no-image-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0.5;
 }
 
-.success h3 {
-  margin-top: 0;
-  font-size: 18px;
-}
-
-.result-preview {
-  margin: 20px 0;
-  background: white;
-  padding: 15px;
-  border-radius: 6px;
-}
-
-.result-preview img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-.success-text {
-  margin: 15px 0;
-  font-weight: 500;
-}
-
-.url-info {
-  background: white;
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 15px;
-}
-
-.url-info p {
-  margin: 0 0 10px 0;
-  color: #333;
+.no-image p {
+  margin: 0 0 4px 0;
   font-weight: 600;
+  font-size: 16px;
 }
 
-.url-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  margin-bottom: 10px;
-  background: #f9f9f9;
+.no-image small {
+  font-size: 13px;
+  opacity: 0.8;
 }
 
-/* Error Message */
-.error {
-  background: #f8d7da;
-  border: 2px solid #f5c6cb;
-  border-radius: 8px;
-  padding: 25px;
-  margin-bottom: 30px;
-  color: #721c24;
-}
-
-.error p {
-  margin: 0 0 15px 0;
-}
-
-/* Actions */
-.actions {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
+/* Responsive */
+@media (max-width: 968px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
@@ -491,16 +542,21 @@ input[type="file"]:focus + label {
     padding: 20px;
   }
 
-  h1 {
+  .admin-header h1 {
     font-size: 22px;
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .admin-container {
     padding: 20px 10px;
+  }
+
+  .upload-section,
+  .preview-section {
+    padding: 20px;
   }
 }
 </style>
