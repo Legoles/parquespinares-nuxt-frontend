@@ -199,8 +199,8 @@ const swiperRef = ref<any>(null)
 let swiperInstance: SwiperType | null = null
 
 const carouselImages = [
+  '/carrousel/5.jpg',  
   '/carrousel/4.JPG',
-  '/carrousel/5.jpg',
   '/carrousel/6.JPG',
   '/carrousel/7.JPG',
   '/carrousel/1.jpeg',

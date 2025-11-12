@@ -39,7 +39,7 @@
           <h3 class="text-base md:text-lg font-semibold text-parque-dark mb-2">{{ feature.title }}</h3>
 
           <!-- Description -->
-          <p class="text-gray-600 text-xs md:text-sm leading-relaxed">{{ feature.description }}</p>
+          <p class="text-parque-lime/70 text-xs md:text-sm leading-relaxed">{{ feature.description }}</p>
         </div>
       </div>
 

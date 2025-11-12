@@ -29,13 +29,14 @@
         <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight" style="text-shadow: 0 1px 3px rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="50">
           <span class="text-white block">ÚLTIMOS</span>
           <span class="text-white block">TERRENOS</span>
-          <span class="text-lime-400 block">DISPONIBLES</span>
+          <span class="text-lime-400 block">A DOS CUADRAS</span>
+          <span class="text-lime-400 block">DE LA PLAYA</span>
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-base md:text-lg lg:text-xl text-white font-light px-2" style="text-shadow: 0 1px 2px rgba(0,0,0,0.15);" data-aos="fade-up" data-aos-delay="100">
+        <!-- <p class="text-base md:text-lg lg:text-xl text-white font-light px-2" style="text-shadow: 0 1px 2px rgba(0,0,0,0.15);" data-aos="fade-up" data-aos-delay="100">
           A dos cuadras de la playa<br class="md:hidden"> en Barrio Privado Sustentable
-        </p>
+        </p> -->
 
         <!-- CTA Button -->
         <div class="pt-2 md:pt-6" data-aos="fade-up" data-aos-delay="150">
